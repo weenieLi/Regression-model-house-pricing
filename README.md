@@ -1,138 +1,23 @@
-# Regression-model-house-pricing
-The code learning process of regression model: the house pricing hands-on project
+#Linear Regression model
+There are two py. project in this file
+One is for Beijing house price
+Another is for hoston house price
 
-import numpy as np
+#keep updating
+this is the first class from machine learning process
+<img width="550" alt="微信截图_20220527213313" src="https://user-images.githubusercontent.com/78788415/170827328-4e85e86d-80bd-4731-a025-c4b0ab5c7ead.png">
+<img width="553" alt="微信截图_20220527213353" src="https://user-images.githubusercontent.com/78788415/170827336-1cf0e7c7-9606-42fd-9f49-53a8d691c417.png">
+<img width="562" alt="微信截图_20220527213421" src="https://user-images.githubusercontent.com/78788415/170827341-9bb8a613-f05f-49cc-a02b-dfd850e39fb8.png">
+<img width="551" alt="微信截图_20220527213543" src="https://user-images.githubusercontent.com/78788415/170827345-9b830e32-d02d-4d74-a77e-8e7d89c0d750.png">
+<img width="567" alt="微信截图_20220528113155" src="https://user-images.githubusercontent.com/78788415/170827348-9f7cd869-5744-4de6-829e-1f0460007e0f.png">
+<img width="675" alt="微信截图_20220528114012" src="https://user-images.githubusercontent.com/78788415/170827356-8adafaf0-08ee-4aa9-92a4-b5f808c02bb3.png">
+<img width="696" alt="微信截图_20220528114205" src="https://user-images.githubusercontent.com/78788415/170827362-3fd78326-87eb-4dbc-8263-ccc8447a4292.png">
+<img width="680" alt="微信截图_20220528114530" src="https://user-images.githubusercontent.com/78788415/170827368-72f76401-0150-41b0-b4cd-252728a18bf2.png">
+<img width="703" alt="微信截图_20220528114850" src="https://user-images.githubusercontent.com/78788415/170827372-12515e6e-02a2-488c-bb5f-034347e33b17.png">
+<img width="691" alt="微信截图_20220528114931" src="https://user-images.githubusercontent.com/78788415/170827377-71bf5d3f-8be1-4e6f-9317-10f0a765891b.png">
+<img width="689" alt="微信截图_20220528115341" src="https://user-images.githubusercontent.com/78788415/170827384-cb54279a-f634-4369-b9bc-300f24eaf7d8.png">
 
-x = np.array([56, 72, 69, 88, 102, 86, 76, 79, 94, 74])
-
-y = np.array([92, 102, 86, 110, 130, 99, 96, 102, 105, 92])
-
-from matplotlib import pyplot as plt
-
-%matplotlib inline
-
-plt.scatter(x, y)
-
-plt.xlabel("Area")
-
-plt.ylabel("Price")
-
-
-def square_loss(x, y, w0, w1):
-
-    loss = sum(np.square(y - (w0 + w1*x)))
-    
-    return loss
+Thanks for watching~
+:)
 
 
-def f(x, w0, w1):
-
-    y = w0 + w1 * x
-    
-    return y
-
-def w_calculator(x, y):
-    n = len(x)
-    
-    w1 = (n*sum(x*y) - sum(x)*sum(y))/(n*sum(x*x) - sum(x)*sum(x))
-    
-    w0 = (sum(x*x)*sum(y) - sum(x)*sum(x*y))/(n*sum(x*x)-sum(x)*sum(x))
-    
-    return w0, w1
-
-w_calculator(x,y)
-
-w0 = w_calculator(x, y)[0]
-
-w1 = w_calculator(x, y)[1]
-
-square_loss(x, y, w0, w1)
-
-x_temp = np.linspace(50, 120, 100)  
-// 绘制直线生成的临时点
-
-plt.scatter(x, y)
-plt.plot(x_temp, x_temp*w1 + w0, 'r')
-
-f(150, w0, w1)
-
-from sklearn.linear_model import LinearRegression
-
-//定义线性回归模型
-
-model = LinearRegression()
-
-model.fit(x.reshape(len(x), 1), y)  
-
-// 训练, reshape 操作把数据处理成 fit 能接受的形状
-
-
-//得到模型拟合参数 w0 w1
-
-print(model.intercept_, model.coef_)
-
-def w_matrix(x, y):
-
-    w = (x.T * x).I * x.T * y
-    
-    return w
-
-x = np.matrix([[1, 56], [1, 72], [1, 69], [1, 88], [1, 102],
-               [1, 86], [1, 76], [1, 79], [1, 94], [1, 74]])
-               
-y = np.matrix([92, 102, 86, 110, 130, 99, 96, 102, 105, 92])
-
-w_matrix(x, y.reshape(10, 1))
-
-
-import pandas as pd
-
-df = pd.read_csv(
-    "https://labfile.oss.aliyuncs.com/courses/1081/course-5-boston.csv")
-
-df.head()
-
-features = df[['crim','rm','lstat']]
-
-features.describe()
-
-target = df['medv']  # 目标值数据
-
-split_num = int(len(features)*0.7)  # 得到 70% 位置
-
-X_train = features[:split_num]  # 训练集特征
-
-y_train = target[:split_num]  # 训练集目标
-
-X_test = features[split_num:]  # 测试集特征
-
-y_test = target[split_num:]  # 测试集目标
-
-model = LinearRegression()  # 建立模型
-
-model.fit(X_train, y_train)  # 训练模型
-
-print(model.coef_, model.intercept_)  # 输出训练后的模型参数和截距项
-
-def mae_value(y_true, y_pred):
-
-    n = len(y_true)
-    
-    mae = sum(np.abs(y_true - y_pred))/n
-    
-    return mae
-
-def mse_value(y_true, y_pred):
-
-    n = len(y_true)
-    
-    mse = sum(np.square(y_true - y_pred))/n
-    
-    return mse
-
-mae = mae_value(y_test.values, preds)
-
-mse = mse_value(y_test.values, preds)
-
-
-print("MAE: ", mae)
